@@ -56,16 +56,27 @@
             color: #777777;
             background-color: #222; width: fit-content; margin: 0 auto; padding: 0 20px; border-radius: 8px;
         }
+        .fine-print {
+            font-size: 0.8em;
+            color: #555;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <p class="title">hi rory</p>
     <div class="apology-container">
-        im sorry rory i just want to be <u>cool with you</u><br>
-        and perhaps give u my <u>attention</u> haha get it.<br>
-        i know this is really corny but im just <u>super shy</u> <br>
-        but i want to <u>get up</u> and show u <u>how sweet</u> i can be.<br>
+        im sorry rory i just want to be 
+        <u class="music-section" data-audio="audio1.mp3">cool with you</u><br>
+        and perhaps give u my 
+        <u class="music-section" data-audio="audio2.mp3">attention</u> haha get it.<br>
+        i know this is really corny but im just 
+        <u class="music-section" data-audio="audio3.mp3">super shy</u> <br>
+        but i want to 
+        <u class="music-section" data-audio="audio4.mp3">get up</u> and show u 
+        <u class="music-section" data-audio="audio5.mp3">how sweet</u> i can be.<br>
         would u ever forgive me and give me a chance to make it up to u?
+        <div class="fine-print">(click the underlined, and me to stop!!)</div>
     </div>
     <div class="button-container">
         <button class="choice-btn yes-btn" id="yesBtn">yes!</button>
@@ -77,7 +88,18 @@
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
 
-        // Lists of possible button texts
+        let audio = new Audio();
+        document.querySelectorAll('.music-section').forEach(el => {
+            el.style.cursor = "pointer";
+            el.addEventListener('click', function() {
+                const audioFile = this.dataset.audio;
+                audio.pause();
+                audio.currentTime = 0;
+                audio.src = audioFile;
+                audio.play();
+            });
+        });
+
         const yesTexts = [
             "come back",
             "sob",
@@ -102,40 +124,36 @@
 
         noBtn.addEventListener('click', function() {
             noClicks++;
-            // Shrink No button, grow Yes button
             let noScale = 1 - (noClicks * 0.2); 
             let yesScale = 1 + (noClicks * 0.2); 
             if (noScale < 0.1) noScale = 0.1;
             if (yesScale > 2) yesScale = 2;
             noBtn.style.transform = `scale(${noScale})`;
             yesBtn.style.transform = `scale(${yesScale})`;
-
-            // Change button texts randomly (not repeating current text)
             yesBtn.textContent = getRandomText(yesTexts, yesBtn.textContent);
             noBtn.textContent = getRandomText(noTexts, noBtn.textContent);
-
             if (noClicks >= maxClicks) {
-                window.location.href = "no.html"; // Change to your "no" page
+                window.location.href = "no.html";
             }
         });
 
         yesBtn.addEventListener('click', function() {
-            window.location.href = "yes.html"; // Change to your "yes" page
+            window.location.href = "yes.html";
         });
 
-        // --- Hover effect for Yes button (show a message) ---
         let lastYesText = yesBtn.textContent;
         const hoverMessage = "omg really?!?!?!?!";
-
         yesBtn.addEventListener('mouseenter', function() {
             lastYesText = yesBtn.textContent;
             yesBtn.textContent = hoverMessage;
         });
-
         yesBtn.addEventListener('mouseleave', function() {
             yesBtn.textContent = lastYesText;
+        });
+        document.querySelector('.fine-print').addEventListener('click', function() {
+            audio.pause();
+            audio.currentTime = 0;
         });
     </script>
 </body>
 </html>
-

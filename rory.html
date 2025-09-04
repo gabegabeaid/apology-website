@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>this is my apology im really sorry</title>
+    <style>
+        body {
+            text-align: center;
+            background-image: url('https://i.redd.it/o2l07t0lhpje1.jpeg');
+            background-size: 50%;
+            background-position: center;
+        }
+        .button-container {
+            margin-top: 30px;
+        }
+        .choice-btn {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.3em;
+            padding: 12px 28px;
+            margin: 0 20px;
+            border-radius: 0;
+            border: 3px solid #222;
+            background: #e0e0e0;
+            color: #111;
+            box-shadow: 4px 4px 0 #888, inset 2px 2px 0 #fff;
+            cursor: pointer;
+            transition: all 0.15s;
+            outline: none;
+            letter-spacing: 1px;
+        }
+        .choice-btn:active {
+            box-shadow: 2px 2px 0 #888, inset 1px 1px 0 #fff;
+            background: #c0c0c0;
+        }
+        .yes-btn {
+            border-color: #008000;
+        }
+        .no-btn {
+            border-color: #800000;
+        }
+        .apology-container {
+            display: inline-block;
+            padding: 16px;
+            border: 4px solid #000000;
+            border-radius: 0px;
+            background: rgb(165, 165, 165);
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <p>RORY PLEASEEEE</p>
+    <div class="apology-container">
+        im sorry rory i just want to be <u>cool with you</u><br>
+        and perhaps give u my <u>attention</u> haha get it.<br>
+        i know this is really corny but im just <u>super shy</u> <br>
+        but i want to <u>get up</u> and show u <u>how sweet</u> i can be.<br>
+        would u ever forgive me and give me a chance to make it up to u?
+    </div>
+    <div class="button-container">
+        <button class="choice-btn yes-btn" id="yesBtn">yes!</button>
+        <button class="choice-btn no-btn" id="noBtn">no.</button>
+    </div>
+    <script>
+        let noClicks = 0;
+        const maxClicks = 5;
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+
+        // Lists of possible button texts
+        const yesTexts = [
+            "come back",
+            "sob",
+            "pretty please",
+            "NOOO DONT LEAVE",
+            "whyy 😞",
+            "plz rory.."
+        ];
+        const noTexts = [
+            "ill prove to u",
+            "im rlly nice and can treat u right",
+            "i airballed..",
+            "wait reconsider plz",
+            ":<",
+            "im sorry"
+        ];
+
+        function getRandomText(arr, current) {
+            let filtered = arr.filter(text => text !== current);
+            return filtered[Math.floor(Math.random() * filtered.length)];
+        }
+
+        noBtn.addEventListener('click', function() {
+            noClicks++;
+            // Shrink No button, grow Yes button
+            let noScale = 1 - (noClicks * 0.2); 
+            let yesScale = 1 + (noClicks * 0.2); 
+            if (noScale < 0.1) noScale = 0.1;
+            if (yesScale > 2) yesScale = 2;
+            noBtn.style.transform = `scale(${noScale})`;
+            yesBtn.style.transform = `scale(${yesScale})`;
+
+            // Change button texts randomly (not repeating current text)
+            yesBtn.textContent = getRandomText(yesTexts, yesBtn.textContent);
+            noBtn.textContent = getRandomText(noTexts, noBtn.textContent);
+
+            if (noClicks >= maxClicks) {
+                window.location.href = "no.html"; // Change to your "no" page
+            }
+        });
+
+        yesBtn.addEventListener('click', function() {
+            window.location.href = "yes.html"; // Change to your "yes" page
+        });
+
+        // --- Hover effect for Yes button (show a message) ---
+        let lastYesText = yesBtn.textContent;
+        const hoverMessage = "omg really?!?!?!?!";
+
+        yesBtn.addEventListener('mouseenter', function() {
+            lastYesText = yesBtn.textContent;
+            yesBtn.textContent = hoverMessage;
+        });
+
+        yesBtn.addEventListener('mouseleave', function() {
+            yesBtn.textContent = lastYesText;
+        });
+    </script>
+</body>
+</html>
